@@ -23,7 +23,7 @@ RUN set -x \
 # wine settings
 ENV WINEARCH win64
 ENV WINEDEBUG fixme-all
-ENV WINEPREFIX /wine
+ENV WINEPREFIX /tmp/wine
 
 # PYPI repository location
 ENV PYPI_URL=https://pypi.python.org/
@@ -41,7 +41,7 @@ RUN set -x \
         wine msiexec /i "${msifile}.msi" /qb TARGETDIR=C:/Python38; \
         rm ${msifile}.msi; \
     done \
-    && cd /wine/drive_c/Python38 \
+    && cd /tmp/wine/drive_c/Python38 \
     && echo 'wine '\''C:\Python38\python.exe'\'' "$@"' > /usr/bin/python \
     && echo 'wine '\''C:\Python38\Scripts\easy_install.exe'\'' "$@"' > /usr/bin/easy_install \
     && echo 'wine '\''C:\Python38\Scripts\pip.exe'\'' "$@"' > /usr/bin/pip \
@@ -54,7 +54,7 @@ RUN set -x \
     && (pip install -U pip || true) \
     && rm -rf /tmp/.wine-*
 
-ENV W_DRIVE_C=/wine/drive_c
+ENV W_DRIVE_C=/tmp/wine/drive_c
 ENV W_WINDIR_UNIX="$W_DRIVE_C/windows"
 ENV W_SYSTEM64_DLLS="$W_WINDIR_UNIX/system32"
 ENV W_TMP="$W_DRIVE_C/windows/temp/_$0"
@@ -75,7 +75,7 @@ ARG PYINSTALLER_VERSION=3.6
 RUN /usr/bin/pip install pyinstaller==$PYINSTALLER_VERSION
 
 # put the src folder inside wine
-RUN mkdir /src/ && ln -s /src /wine/drive_c/src
+RUN mkdir /src/ && ln -s /src /tmp/wine/drive_c/src
 VOLUME /src/
-WORKDIR /wine/drive_c/src/
-RUN mkdir -p /wine/drive_c/tmp
+WORKDIR /tmp/wine/drive_c/src/
+RUN mkdir -p /tmp/wine/drive_c/tmp
