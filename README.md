@@ -8,9 +8,7 @@ Current PyInstaller version used: 3.6.
 
 `cdrx/pyinstaller-linux` and `cdrx/pyinstaller-windows` both have two tags, `:python2` and `:python3` which you can use depending on the requirements of your project. `:latest` points to `:python3`
 
-The `:python2` tags run Python 2.7.
-
-The `:python3` tag runs Python 3.7.
+The `:python3` tag runs Python 3.8.13
 
 ## Usage
 
